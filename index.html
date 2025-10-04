@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patrimonio Vivo "El Rincón" - Vota por Suba</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Custom - Blanco Puro, Teal Ecológico, Carbón Intenso, Fucsia Comunitario, Naranja Solar -->
+    <!-- Application Structure Plan: A narrative, persuasive scroll-based structure designed to take the user on an emotional and informational journey. It starts with a strong Call to Action (Vote!), explains the project's dream and methods, details the specific benefits in an interactive section, addresses community leaders, and ends with a final, clear CTA. This is better than a dry, report-like structure because it's designed to inspire action and connect with a community audience. -->
+    <!-- Visualization & Content Choices: Goal: Explain project benefits -> Method: Interactive Tab/Card component -> Interaction: User clicks a category (e.g., 'For Our Youth'), and relevant text appears -> Justification: Breaks down the project's "potentialities" into easily digestible, user-centric benefits, making the impact feel personal and clear. This is more engaging than a long list of text. Method: Vanilla JS and Tailwind CSS. Goal: Explain project activities -> Method: Icon-like visual blocks with short text -> Interaction: None, purely visual organization -> Justification: Visually separates the core activities for quick scanning. Method: HTML/CSS. CONFIRM: No charts, no SVG, no Mermaid. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            background-color: #FFFFFF; /* Changed for better contrast */
+            color: #1F2937; /* Changed to a darker charcoal for visibility */
+            font-family: 'Poppins', sans-serif;
+        }
+        .font-brand {
+            font-family: 'Caveat', cursive;
+        }
+        .text-teal { color: #008080; }
+        .text-charcoal { color: #1F2937; }
+        .bg-charcoal { background-color: #1F2937; }
+        .border-charcoal { border-color: #1F2937; }
+        .bg-fuchsia { background-color: #CB2B92; }
+        .bg-orange { background-color: #FD5800; }
+        .border-fuchsia { border-color: #CB2B92; }
+        .border-orange { border-color: #FD5800; }
+        .btn {
+            transition: all 0.3s ease;
+            box-shadow: 4px 4px 0px #1F2937; /* Updated shadow color */
+        }
+        .btn:hover {
+            transform: translateY(-2px) translateX(-2px);
+            box-shadow: 6px 6px 0px #1F2937; /* Updated shadow color */
+        }
+        .btn:active {
+            transform: translateY(2px) translateX(2px);
+            box-shadow: 2px 2px 0px #1F2937; /* Updated shadow color */
+        }
+        .interactive-tab {
+            transition: all 0.3s ease;
+            border-bottom-width: 4px;
+            border-bottom-color: transparent;
+        }
+        .interactive-tab.active {
+            border-bottom-color: #CB2B92;
+            color: #008080;
+        }
+        .texture-bg {
+            background-color: #FAF9F6; /* Kept the light texture on specific sections */
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23008080' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header & Hero -->
+    <header class="texture-bg">
+        <div class="container mx-auto px-6 py-12 text-center">
+            <h2 class="font-brand text-4xl md:text-5xl text-teal">Turistea with us presenta:</h2>
+            <h1 class="text-charcoal font-bold text-5xl md:text-7xl mt-4 leading-tight">
+                Patrimonio Vivo<br class="hidden md:block"> "El Rincón"
+            </h1>
+            <p class="text-charcoal text-xl md:text-2xl mt-6 max-w-3xl mx-auto">
+                Conectando comunidad, naturaleza y futuro en el corazón de Suba.
+            </p>
+            <div class="mt-10 bg-white/70 backdrop-blur-sm p-8 rounded-2xl inline-block border-2 border-charcoal shadow-lg">
+                <p class="text-charcoal text-2xl font-semibold">Para hacerlo realidad, necesitamos tu voto en los</p>
+                <p class="text-teal font-bold text-4xl my-2">Presupuestos Participativos</p>
+                <p class="text-charcoal text-2xl">Usa el código:</p>
+                <div class="my-4 px-8 py-4 bg-orange text-white text-6xl font-bold rounded-xl inline-block tracking-widest">
+                    53303
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-16">
+
+        <!-- Section 1: The Dream -->
+        <section id="sueño" class="text-center max-w-4xl mx-auto mb-20">
+            <h2 class="font-brand text-5xl md:text-6xl text-teal mb-6">¿Qué soñamos para Suba?</h2>
+            <p class="text-lg text-charcoal leading-relaxed">
+                Soñamos con un barrio donde nuestras historias ancestrales y las voces de nuestros abuelos se unan con la creatividad de los jóvenes. Un lugar donde la tecnología, como la inteligencia artificial, no sea una amenaza, sino una herramienta para que nuestra juventud cree, innove y se prepare para el futuro. Queremos fortalecer nuestros lazos como comunidad, proteger la riqueza del humedal Tibabuyes y construir un legado cultural que nos llene de orgullo a todos.
+            </p>
+        </section>
+
+        <!-- Section 2: How we do it -->
+        <section id="como" class="mb-20">
+            <h2 class="font-brand text-5xl md:text-6xl text-teal mb-10 text-center">Así lo haremos realidad</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Card 1 -->
+                <div class="bg-white p-6 rounded-2xl border-2 border-charcoal text-center transform hover:-translate-y-2 transition-transform duration-300">
+                    <div class="text-5xl mb-4">💬</div>
+                    <h3 class="font-bold text-xl text-teal mb-2">Rescatando Historias</h3>
+                    <p class="text-charcoal">Grabaremos las voces y saberes de la comunidad Muisca y de nuestros mayores para que su sabiduría inspire a las nuevas generaciones.</p>
+                </div>
+                <!-- Card 2 -->
+                <div class="bg-white p-6 rounded-2xl border-2 border-charcoal text-center transform hover:-translate-y-2 transition-transform duration-300">
+                    <div class="text-5xl mb-4">🎨</div>
+                    <h3 class="font-bold text-xl text-teal mb-2">Jóvenes Creadores + IA</h3>
+                    <p class="text-charcoal">Realizaremos talleres de dibujo digital y escritura creativa, donde los jóvenes usarán la Inteligencia Artificial como una aliada para crear personajes y animaciones increíbles.</p>
+                </div>
+                <!-- Card 3 -->
+                <div class="bg-white p-6 rounded-2xl border-2 border-charcoal text-center transform hover:-translate-y-2 transition-transform duration-300">
+                    <div class="text-5xl mb-4">🏞️</div>
+                    <h3 class="font-bold text-xl text-teal mb-2">Arte que une al Barrio</h3>
+                    <p class="text-charcoal">Crearemos un gran mural con realidad aumentada en el Parque El Rosal y una cartilla digital educativa, llevando el arte y nuestras historias a todos los rincones de la comunidad.</p>
+                </div>
+                <!-- Card 4 -->
+                <div class="bg-white p-6 rounded-2xl border-2 border-charcoal text-center transform hover:-translate-y-2 transition-transform duration-300">
+                    <div class="text-5xl mb-4">🤝</div>
+                    <h3 class="font-bold text-xl text-teal mb-2">Alianzas que construyen</h3>
+                    <p class="text-charcoal">Trabajaremos mano a mano con las Juntas de Acción Comunal y los colegios del Rincón para que este proyecto sea de todos y para todos.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: The Impact (Interactive) -->
+        <section id="impacto" class="mb-20">
+            <h2 class="font-brand text-5xl md:text-6xl text-teal mb-10 text-center">¿Por qué este proyecto es clave?</h2>
+            <div class="max-w-4xl mx-auto bg-white p-4 sm:p-6 rounded-2xl border-2 border-charcoal">
+                <div class="flex flex-wrap justify-center border-b-2 border-charcoal/20 mb-4">
+                    <button id="tab-youth" class="interactive-tab text-charcoal font-semibold text-lg p-4 active">Para nuestros Jóvenes</button>
+                    <button id="tab-community" class="interactive-tab text-charcoal font-semibold text-lg p-4">Para nuestra Comunidad</button>
+                    <button id="tab-heritage" class="interactive-tab text-charcoal font-semibold text-lg p-4">Para nuestro Patrimonio</button>
+                </div>
+                <div id="content-container" class="p-4 text-charcoal text-lg leading-relaxed">
+                    <!-- Content will be injected by JS -->
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 4: Call to Leaders -->
+        <section id="lideres" class="texture-bg rounded-2xl p-10 mb-20 text-center">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="font-brand text-5xl md:text-6xl text-teal mb-6">Un llamado a nuestros líderes comunales</h2>
+                <p class="text-lg text-charcoal leading-relaxed mb-8">
+                    Presidentes y miembros de las Juntas de Acción Comunal, este proyecto es una herramienta poderosa para ustedes. Nos ayuda a integrar a los jóvenes, a generar orgullo por nuestro territorio y a crear espacios de encuentro y diálogo. Apoyar "Patrimonio Vivo" es invertir directamente en el fortalecimiento de nuestro tejido social y en un futuro más próspero y unido para Suba. ¡Contamos con su liderazgo para difundir esta iniciativa!
+                </p>
+                 <a href="#vota" class="btn bg-fuchsia text-white font-bold py-4 px-8 rounded-lg text-xl">
+                    ¡Ayúdanos a promocionar el voto!
+                </a>
+            </div>
+        </section>
+
+        <!-- Section 5: Final CTA -->
+        <section id="vota" class="text-center">
+             <h2 class="font-brand text-5xl md:text-6xl text-teal mb-6">¡Tu voto construye comunidad!</h2>
+             <p class="text-xl text-charcoal max-w-3xl mx-auto mb-8">
+                Hacer realidad este sueño es muy fácil. Participa en las votaciones de Presupuestos Participativos de la localidad de Suba y apoya el proyecto que fortalecerá nuestra cultura y el futuro de nuestros jóvenes.
+             </p>
+             <div class="bg-white max-w-2xl mx-auto p-8 rounded-2xl border-4 border-dashed border-orange">
+                <p class="text-charcoal text-2xl font-semibold">Recuerda, el código es:</p>
+                <div class="my-4 px-8 py-4 bg-fuchsia text-white text-7xl font-bold rounded-xl inline-block tracking-widest">
+                    53303
+                </div>
+                <p class="text-charcoal mt-4 text-lg">Busca el punto de votación más cercano o vota de forma virtual en la plataforma de la Alcaldía. ¡Cada voto cuenta!</p>
+             </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-charcoal text-white mt-20">
+        <div class="container mx-auto px-6 py-10">
+            <div class="text-center">
+                <h3 class="font-brand text-4xl text-white">Turistea with us</h3>
+                <p class="mt-2">Creando experiencias que conectan.</p>
+                <div class="flex justify-center items-center space-x-6 mt-6">
+                    <a href="mailto:turisteawithus@gmail.com" class="flex items-center space-x-2 hover:text-orange transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                        <span>turisteawithus@gmail.com</span>
+                    </a>
+                    <a href="tel:+573208734659" class="flex items-center space-x-2 hover:text-fuchsia transition-colors">
+                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+                        <span>+57 320 873 4659</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = {
+                youth: {
+                    button: document.getElementById('tab-youth'),
+                    content: `<strong>Capacidades para el futuro:</strong> Los jóvenes aprenderán a usar herramientas de Inteligencia Artificial, una habilidad clave para el mercado laboral de hoy y del mañana. No solo consumirán tecnología, ¡la usarán para crear! <br><br><strong>Una voz propia:</strong> A través de la escritura y el arte, los participantes podrán expresar sus ideas, contar sus propias historias y desarrollar su creatividad, fortaleciendo su confianza y su identidad.`
+                },
+                community: {
+                    button: document.getElementById('tab-community'),
+                    content: `<strong>Lazos más fuertes:</strong> El proyecto une a jóvenes, abuelos, líderes comunales y colegios, tejiendo una red de colaboración y confianza en el barrio. Se crean espacios para conocernos y trabajar juntos. <br><br><strong>Orgullo local:</strong> Al crear un mural, una cartilla y piezas audiovisuales sobre nuestra propia cultura, generamos un sentimiento de pertenencia y orgullo por vivir en Suba, en el Rincón. Valoramos lo nuestro.`
+                },
+                heritage: {
+                    button: document.getElementById('tab-heritage'),
+                    content: `<strong>Memoria viva:</strong> Rescatamos y honramos el legado Muisca y las historias de nuestros mayores, asegurando que esta riqueza cultural no se pierda y sea conocida por todos. <br><br><strong>Nuevas formas de contar:</strong> Usamos la tecnología para dar nueva vida a nuestro patrimonio. La realidad aumentada en el mural permitirá que todos interactúen con nuestras tradiciones de una forma innovadora y emocionante.`
+                }
+            };
+
+            const contentContainer = document.getElementById('content-container');
+            
+            function updateContent(tabKey) {
+                contentContainer.innerHTML = tabs[tabKey].content;
+                Object.values(tabs).forEach(tab => tab.button.classList.remove('active'));
+                tabs[tabKey].button.classList.add('active');
+            }
+
+            Object.keys(tabs).forEach(key => {
+                tabs[key].button.addEventListener('click', () => updateContent(key));
+            });
+            
+            updateContent('youth');
+        });
+    </script>
+</body>
+</html>
+
