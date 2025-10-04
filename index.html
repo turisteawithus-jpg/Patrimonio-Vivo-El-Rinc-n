@@ -62,7 +62,7 @@
 </head>
 <body class="antialiased">
 
-    <header class="texture-bg">
+    <header class="texture-bg" id="header">
         <div class="container mx-auto px-6 py-12 text-center">
             <div class="inline-block">
                 <img src="LOGO.png" alt="Logo de Turistea with us" class="h-32 sm:h-40 mx-auto">
@@ -87,11 +87,11 @@
 
         <section id="como" class="mb-20">
             <h2 class="font-brand text-5xl md:text-6xl text-teal mb-10 text-center">Así lo haremos realidad</h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="bg-white p-6 rounded-2xl border-2 border-charcoal text-center"><div class="text-5xl mb-4">💬</div><h3 class="font-bold text-xl text-teal mb-2">Rescatando Historias</h3><p class="text-charcoal">Grabaremos las voces y saberes de la comunidad Muisca y de nuestros mayores.</p></div>
-                <div class="bg-white p-6 rounded-2xl border-2 border-charcoal text-center"><div class="text-5xl mb-4">🎨</div><h3 class="font-bold text-xl text-teal mb-2">Jóvenes Creadores + IA</h3><p class="text-charcoal">Realizaremos talleres donde los jóvenes usarán la IA como una aliada creativa.</p></div>
-                <div class="bg-white p-6 rounded-2xl border-2 border-charcoal text-center"><div class="text-5xl mb-4">🏞️</div><h3 class="font-bold text-xl text-teal mb-2">Arte que une al Barrio</h3><p class="text-charcoal">Crearemos un gran mural con realidad aumentada y una cartilla digital educativa.</p></div>
-                <div class="bg-white p-6 rounded-2xl border-2 border-charcoal text-center"><div class="text-5xl mb-4">🤝</div><h3 class="font-bold text-xl text-teal mb-2">Alianzas que construyen</h3><p class="text-charcoal">Trabajaremos mano a mano con líderes, Juntas de Acción Comunal y colegios.</p></div>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-2xl border-2 border-charcoal"><div class="text-5xl mb-4">💬</div><h3 class="font-bold text-xl text-teal mb-2">Rescatando Historias y Saberes</h3><p class="text-charcoal">Realizaremos un profundo trabajo de investigación para documentar el patrimonio inmaterial de Suba. A través de entrevistas y conversatorios, grabaremos las voces, relatos y conocimientos de la comunidad Muisca y de los abuelos y abuelas del barrio El Rincón, creando un archivo vivo que servirá de inspiración y legado para todos.</p></div>
+                <div class="bg-white p-6 rounded-2xl border-2 border-charcoal"><div class="text-5xl mb-4">🎨</div><h3 class="font-bold text-xl text-teal mb-2">Jóvenes Creadores + Inteligencia Artificial</h3><p class="text-charcoal">Organizaremos talleres prácticos de escritura creativa y dibujo digital para jóvenes. En estos espacios, aprenderán a usar la Inteligencia Artificial como una poderosa herramienta de co-creación para desarrollar personajes, texturas y micro-animaciones, preparando sus habilidades para las nuevas demandas del mercado laboral y creativo.</p></div>
+                <div class="bg-white p-6 rounded-2xl border-2 border-charcoal"><div class="text-5xl mb-4">🏞️</div><h3 class="font-bold text-xl text-teal mb-2">Arte que Transforma el Barrio</h3><p class="text-charcoal">Llevaremos el arte al espacio público para que todos lo disfruten. Crearemos un gran mural escultórico en el Parque El Rosal que integrará Realidad Aumentada, permitiendo a los vecinos interactuar con las historias del barrio a través de sus celulares. Además, diseñaremos una cartilla digital educativa con todos los relatos e ilustraciones del proyecto.</p></div>
+                <div class="bg-white p-6 rounded-2xl border-2 border-charcoal"><div class="text-5xl mb-4">🤝</div><h3 class="font-bold text-xl text-teal mb-2">Alianzas que Tejen Comunidad</h3><p class="text-charcoal">Este no es un proyecto aislado. Trabajaremos de la mano con líderes y lideresas, las Juntas de Acción Comunal (JAC) de barrios como Lago de Suba, Corinto y Telecom Arrayanes, y colegios aliados. Los estudiantes se convertirán en jóvenes investigadores, fortaleciendo el tejido social y asegurando que el proyecto sea de todos y para todos.</p></div>
             </div>
         </section>
 
@@ -140,11 +140,11 @@
                 <p class="text-lg text-charcoal leading-relaxed mb-8">
                     A ustedes, líderes y lideresas de la comunidad, miembros de Juntas de Acción Comunal, colectivos, organizaciones sociales y culturales: este proyecto es una herramienta poderosa para ustedes. Nos ayuda a integrar a los jóvenes, a generar orgullo por nuestro territorio y a crear espacios de encuentro y diálogo. Apoyar "Patrimonio Vivo" es invertir directamente en el fortalecimiento de nuestro tejido social y en un futuro más próspero y unido para Suba. ¡Contamos con su liderazgo para difundir esta iniciativa!
                 </p>
-                 <a href="#vota" class="btn bg-fuchsia text-white font-bold py-3 px-6 sm:py-4 sm:px-8 rounded-lg text-lg sm:text-xl">¡Ayúdanos a promocionar el voto!</a>
+                 <a href="#vota-final" class="btn bg-fuchsia text-white font-bold py-3 px-6 sm:py-4 sm:px-8 rounded-lg text-lg sm:text-xl">¡Ayúdanos a promocionar el voto!</a>
             </div>
         </section>
 
-        <section id="vota" class="mb-20 text-center texture-bg rounded-2xl py-12">
+        <section id="vota-final" class="mb-20 text-center texture-bg rounded-2xl py-12">
             <h2 class="font-brand text-5xl md:text-6xl text-teal mb-6">¡Tu voto construye comunidad!</h2>
             <div class="bg-white max-w-xl mx-auto p-8 rounded-2xl border-4 border-dashed border-orange">
                 <p class="text-charcoal text-2xl font-semibold">Usa el código:</p>
@@ -178,6 +178,10 @@
                 </div>
                 <div id="puntos-loader" class="mt-6 hidden"><div class="loader"><span class="bounce1"></span><span class="bounce2"></span><span class="bounce3"></span></div></div>
                 <div id="puntos-result" class="mt-6 space-y-4"></div>
+                <div class="mt-8 text-center border-t-2 border-charcoal/10 pt-6">
+                    <p class="text-charcoal mb-4">¿Ya sabes dónde votar? ¡Ahora conoce por qué nuestro proyecto es la mejor opción para Suba!</p>
+                    <a href="#impacto" class="btn bg-fuchsia text-white font-bold py-3 px-6 rounded-lg inline-flex items-center">Conoce la Propuesta Aquí <span class="ml-2">→</span></a>
+                </div>
              </div>
         </section>
         
@@ -217,7 +221,7 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const apiKey = "AIzaSyBZ_cW20Ri2qkp65g-ihuX5CHcXZfUyjlU"; // PEGA TU CLAVE API AQUÍ
+        const apiKey = ""; // PEGA TU CLAVE API AQUÍ
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
 
         // Tabs
