@@ -8,14 +8,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Custom - Blanco Puro, Teal Ecológico, Carbón Intenso, Fucsia Comunitario, Naranja Solar -->
-    <!-- Application Structure Plan: A narrative, persuasive scroll-based structure designed to take the user on an emotional and informational journey. It starts with a strong Call to Action (Vote!), explains the project's dream and methods, details the specific benefits in an interactive section, addresses community leaders, and ends with a final, clear CTA. This is better than a dry, report-like structure because it's designed to inspire action and connect with a community audience. -->
-    <!-- Visualization & Content Choices: Goal: Explain project benefits -> Method: Interactive Tab/Card component -> Interaction: User clicks a category (e.g., 'For Our Youth'), and relevant text appears -> Justification: Breaks down the project's "potentialities" into easily digestible, user-centric benefits, making the impact feel personal and clear. This is more engaging than a long list of text. Method: Vanilla JS and Tailwind CSS. Goal: Explain project activities -> Method: Icon-like visual blocks with short text -> Interaction: None, purely visual organization -> Justification: Visually separates the core activities for quick scanning. Method: HTML/CSS. CONFIRM: No charts, no SVG, no Mermaid. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
+        html { scroll-behavior: smooth; }
         body {
-            background-color: #FFFFFF; /* Changed for better contrast */
-            color: #1F2937; /* Changed to a darker charcoal for visibility */
+            background-color: #FFFFFF;
+            color: #1F2937;
             font-family: 'Poppins', sans-serif;
         }
         .font-brand {
@@ -27,26 +24,31 @@
         .border-charcoal { border-color: #1F2937; }
         .bg-fuchsia { background-color: #CB2B92; }
         .bg-orange { background-color: #FD5800; }
-        .border-fuchsia { border-color: #CB2B92; }
-        .border-orange { border-color: #FD5800; }
         .btn {
             transition: all 0.3s ease;
-            box-shadow: 4px 4px 0px #1F2937; /* Updated shadow color */
+            box-shadow: 4px 4px 0px #1F2937;
         }
         .btn:hover {
             transform: translateY(-2px) translateX(-2px);
-            box-shadow: 6px 6px 0px #1F2937; /* Updated shadow color */
+            box-shadow: 6px 6px 0px #1F2937;
         }
         .btn:active {
             transform: translateY(2px) translateX(2px);
-            box-shadow: 2px 2px 0px #1F2937; /* Updated shadow color */
+            box-shadow: 2px 2px 0px #1F2937;
         }
-        .btn-gemini {
-             background-color: #008080;
+        .texture-bg {
+            background-color: #FAF9F6;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23008080' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
-        .btn-gemini:hover {
-            background-color: #006666;
-        }
+        .loader { display: inline-block; text-align: center; }
+        .loader span { display: inline-block; width: 10px; height: 10px; background-color: #008080; border-radius: 50%; animation: bounce 1.4s infinite ease-in-out both; }
+        .loader .bounce1 { animation-delay: -0.32s; }
+        .loader .bounce2 { animation-delay: -0.16s; }
+        @keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1.0); } }
+        .modal-overlay { transition: opacity 0.3s ease; }
+        .modal-content { transition: transform 0.3s ease; }
+        .carousel-slide { display: none; }
+        .carousel-slide.active { display: block; }
         .interactive-tab {
             transition: all 0.3s ease;
             border-bottom-width: 4px;
@@ -56,97 +58,43 @@
             border-bottom-color: #CB2B92;
             color: #008080;
         }
-        .texture-bg {
-            background-color: #FAF9F6; /* Kept the light texture on specific sections */
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23008080' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-        }
-        .loader {
-            display: inline-block;
-            text-align: center;
-        }
-        .loader span {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            background-color: #008080;
-            border-radius: 50%;
-            animation: bounce 1.4s infinite ease-in-out both;
-        }
-        .loader .bounce1 { animation-delay: -0.32s; }
-        .loader .bounce2 { animation-delay: -0.16s; }
-        @keyframes bounce {
-            0%, 80%, 100% { transform: scale(0); }
-            40% { transform: scale(1.0); }
-        }
     </style>
 </head>
 <body class="antialiased">
 
-    <!-- Header & Hero -->
     <header class="texture-bg">
         <div class="container mx-auto px-6 py-12 text-center">
-            <img src="LOGO..png" alt="Logo de Turistea with us" class="h-24 mx-auto mb-6">
-            <h2 class="font-brand text-4xl md:text-5xl text-teal">Turistea with us presenta:</h2>
-            <h1 class="text-charcoal font-bold text-5xl md:text-7xl mt-4 leading-tight">
-                Patrimonio Vivo<br class="hidden md:block"> "El Rincón"
-            </h1>
-            <p class="text-charcoal text-xl md:text-2xl mt-6 max-w-3xl mx-auto">
-                Conectando comunidad, naturaleza y futuro en el corazón de Suba.
-            </p>
-            <div class="mt-10 bg-white/70 backdrop-blur-sm p-8 rounded-2xl inline-block border-2 border-charcoal shadow-lg">
-                <p class="text-charcoal text-2xl font-semibold">Para hacerlo realidad, necesitamos tu voto en los</p>
-                <p class="text-teal font-bold text-4xl my-2">Presupuestos Participativos</p>
-                <p class="text-charcoal text-2xl">Usa el código:</p>
-                <div class="my-4 px-8 py-4 bg-orange text-white text-6xl font-bold rounded-xl inline-block tracking-widest">
-                    53303
+            <div class="inline-block">
+                <img src="LOGO.png" alt="Logo de Turistea with us" class="h-32 sm:h-40 mx-auto">
+                <div class="flex justify-center space-x-2 mt-3">
+                    <div class="h-2 w-16 bg-orange rounded-full"></div>
+                    <div class="h-2 w-8 bg-orange rounded-full"></div>
+                    <div class="h-2 w-4 bg-orange rounded-full"></div>
                 </div>
             </div>
+            <h2 class="font-brand text-4xl md:text-5xl text-teal mt-6">Presenta:</h2>
+            <h1 class="text-charcoal font-bold text-5xl md:text-7xl mt-4 leading-tight">Patrimonio Vivo<br class="hidden md:block"> "El Rincón"</h1>
+            <p class="text-charcoal text-xl md:text-2xl mt-6 max-w-3xl mx-auto">Conectando comunidad, naturaleza y futuro en el corazón de Suba.</p>
         </div>
     </header>
 
-    <!-- Main Content -->
     <main class="container mx-auto px-6 py-16">
 
-        <!-- Section 1: The Dream -->
         <section id="sueño" class="text-center max-w-4xl mx-auto mb-20">
             <h2 class="font-brand text-5xl md:text-6xl text-teal mb-6">¿Qué soñamos para Suba?</h2>
-            <p class="text-lg text-charcoal leading-relaxed">
-                Soñamos con un barrio donde nuestras historias ancestrales y las voces de nuestros abuelos se unan con la creatividad de los jóvenes. Un lugar donde la tecnología, como la inteligencia artificial, no sea una amenaza, sino una herramienta para que nuestra juventud cree, innove y se prepare para el futuro. Queremos fortalecer nuestros lazos como comunidad, proteger la riqueza del humedal Tibabuyes y construir un legado cultural que nos llene de orgullo a todos.
-            </p>
+            <p class="text-lg text-charcoal leading-relaxed">Soñamos con un barrio donde nuestras historias ancestrales y las voces de nuestros abuelos se unan con la creatividad de los jóvenes. Un lugar donde la tecnología, como la inteligencia artificial, no sea una amenaza, sino una herramienta para que nuestra juventud cree, innove y se prepare para el futuro.</p>
         </section>
 
-        <!-- Section 2: How we do it -->
         <section id="como" class="mb-20">
             <h2 class="font-brand text-5xl md:text-6xl text-teal mb-10 text-center">Así lo haremos realidad</h2>
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Card 1 -->
-                <div class="bg-white p-6 rounded-2xl border-2 border-charcoal text-center transform hover:-translate-y-2 transition-transform duration-300">
-                    <div class="text-5xl mb-4">💬</div>
-                    <h3 class="font-bold text-xl text-teal mb-2">Rescatando Historias</h3>
-                    <p class="text-charcoal">Grabaremos las voces y saberes de la comunidad Muisca y de nuestros mayores para que su sabiduría inspire a las nuevas generaciones.</p>
-                </div>
-                <!-- Card 2 -->
-                <div class="bg-white p-6 rounded-2xl border-2 border-charcoal text-center transform hover:-translate-y-2 transition-transform duration-300">
-                    <div class="text-5xl mb-4">🎨</div>
-                    <h3 class="font-bold text-xl text-teal mb-2">Jóvenes Creadores + IA</h3>
-                    <p class="text-charcoal">Realizaremos talleres de dibujo digital y escritura creativa, donde los jóvenes usarán la Inteligencia Artificial como una aliada para crear personajes y animaciones increíbles.</p>
-                </div>
-                <!-- Card 3 -->
-                <div class="bg-white p-6 rounded-2xl border-2 border-charcoal text-center transform hover:-translate-y-2 transition-transform duration-300">
-                    <div class="text-5xl mb-4">🏞️</div>
-                    <h3 class="font-bold text-xl text-teal mb-2">Arte que une al Barrio</h3>
-                    <p class="text-charcoal">Crearemos un gran mural con realidad aumentada en el Parque El Rosal y una cartilla digital educativa, llevando el arte y nuestras historias a todos los rincones de la comunidad.</p>
-                </div>
-                <!-- Card 4 -->
-                <div class="bg-white p-6 rounded-2xl border-2 border-charcoal text-center transform hover:-translate-y-2 transition-transform duration-300">
-                    <div class="text-5xl mb-4">🤝</div>
-                    <h3 class="font-bold text-xl text-teal mb-2">Alianzas que construyen</h3>
-                    <p class="text-charcoal">Trabajaremos mano a mano con las Juntas de Acción Comunal y los colegios del Rincón para que este proyecto sea de todos y para todos.</p>
-                </div>
+                <div class="bg-white p-6 rounded-2xl border-2 border-charcoal text-center"><div class="text-5xl mb-4">💬</div><h3 class="font-bold text-xl text-teal mb-2">Rescatando Historias</h3><p class="text-charcoal">Grabaremos las voces y saberes de la comunidad Muisca y de nuestros mayores.</p></div>
+                <div class="bg-white p-6 rounded-2xl border-2 border-charcoal text-center"><div class="text-5xl mb-4">🎨</div><h3 class="font-bold text-xl text-teal mb-2">Jóvenes Creadores + IA</h3><p class="text-charcoal">Realizaremos talleres donde los jóvenes usarán la IA como una aliada creativa.</p></div>
+                <div class="bg-white p-6 rounded-2xl border-2 border-charcoal text-center"><div class="text-5xl mb-4">🏞️</div><h3 class="font-bold text-xl text-teal mb-2">Arte que une al Barrio</h3><p class="text-charcoal">Crearemos un gran mural con realidad aumentada y una cartilla digital educativa.</p></div>
+                <div class="bg-white p-6 rounded-2xl border-2 border-charcoal text-center"><div class="text-5xl mb-4">🤝</div><h3 class="font-bold text-xl text-teal mb-2">Alianzas que construyen</h3><p class="text-charcoal">Trabajaremos mano a mano con líderes, Juntas de Acción Comunal y colegios.</p></div>
             </div>
         </section>
 
-        <!-- Section 3: The Impact (Interactive) -->
         <section id="impacto" class="mb-20">
             <h2 class="font-brand text-5xl md:text-6xl text-teal mb-10 text-center">¿Por qué este proyecto es clave?</h2>
             <div class="max-w-4xl mx-auto bg-white p-4 sm:p-6 rounded-2xl border-2 border-charcoal">
@@ -155,227 +103,200 @@
                     <button id="tab-community" class="interactive-tab text-charcoal font-semibold text-lg p-4">Para nuestra Comunidad</button>
                     <button id="tab-heritage" class="interactive-tab text-charcoal font-semibold text-lg p-4">Para nuestro Patrimonio</button>
                 </div>
-                <div id="content-container" class="p-4 text-charcoal text-lg leading-relaxed">
-                    <!-- Content will be injected by JS -->
-                </div>
+                <div id="content-container" class="p-4 text-charcoal text-lg leading-relaxed"></div>
             </div>
         </section>
-
-        <!-- NEW Gemini Section -->
-        <section id="gemini-interaction" class="mb-20">
-            <h2 class="font-brand text-5xl md:text-6xl text-teal mb-10 text-center">Participa con la IA ✨</h2>
-            <div class="max-w-4xl mx-auto text-center">
-                <p class="text-lg text-charcoal leading-relaxed mb-8">
-                    Experimenta el poder creativo de la Inteligencia Artificial que usaremos en nuestros talleres. ¡Inspírate y ayúdanos a difundir la palabra!
-                </p>
-                <div class="grid md:grid-cols-2 gap-8">
-                    <!-- Story Generator -->
-                    <div class="bg-white p-6 rounded-2xl border-2 border-charcoal text-left">
-                        <h3 class="font-bold text-xl text-teal mb-3 text-center">Crea un Micro-Cuento</h3>
-                        <p class="text-charcoal mb-4 text-sm">Escribe 3 palabras clave (ej: humedal, abuela, futuro) y mira la magia.</p>
-                        <input id="story-keywords" type="text" placeholder="Palabras clave separadas por coma" class="w-full p-2 border-2 border-charcoal/30 rounded-md mb-4">
-                        <button id="generate-story-btn" class="btn btn-gemini w-full text-white font-bold py-3 px-6 rounded-lg text-lg">
-                            Generar Historia ✨
-                        </button>
-                        <div id="story-loader" class="mt-4 hidden">
-                            <div class="loader">
-                                <span class="bounce1"></span><span class="bounce2"></span><span class="bounce3"></span>
-                            </div>
-                        </div>
-                        <div id="story-result" class="mt-4 p-4 bg-gray-50 rounded-md border border-gray-200 text-charcoal text-base leading-relaxed" style="white-space: pre-wrap;"></div>
-                    </div>
-                    <!-- Message Generator -->
-                    <div class="bg-white p-6 rounded-2xl border-2 border-charcoal text-left flex flex-col">
-                        <h3 class="font-bold text-xl text-teal mb-3 text-center">Mensaje para Compartir</h3>
-                        <p class="text-charcoal mb-4 text-sm">Genera un mensaje de WhatsApp para invitar a tus vecinos a votar.</p>
-                         <button id="generate-message-btn" class="btn btn-gemini w-full text-white font-bold py-3 px-6 rounded-lg text-lg mt-auto">
-                            Generar Mensaje ✨
-                        </button>
-                        <div id="message-loader" class="mt-4 hidden">
-                            <div class="loader">
-                                <span class="bounce1"></span><span class="bounce2"></span><span class="bounce3"></span>
-                            </div>
-                        </div>
-                        <div id="message-result-container" class="mt-4 hidden">
-                            <div id="message-result" class="p-4 bg-gray-50 rounded-md border border-gray-200 text-charcoal text-base" style="white-space: pre-wrap;"></div>
-                            <button id="copy-message-btn" class="btn bg-orange w-full text-white font-bold py-2 px-4 rounded-lg text-base mt-3">
-                                Copiar Mensaje
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         
-        <!-- Section 4: Call to Leaders -->
+        <section id="gemini-interaction" class="mb-20">
+            <h2 class="font-brand text-5xl md:text-6xl text-teal mb-10 text-center">Participa con la IA 🤖✨</h2>
+             <p class="text-lg text-charcoal leading-relaxed mb-8 max-w-4xl mx-auto text-center">
+                Experimenta el poder creativo de la Inteligencia Artificial que usaremos en nuestros talleres. ¡Inspírate y ayúdanos a difundir la palabra!
+            </p>
+            <div class="max-w-4xl mx-auto text-center grid md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-2xl border-2 border-charcoal text-left">
+                    <h3 class="font-bold text-xl text-teal mb-3 text-center">Crea un Micro-Cuento</h3>
+                    <p class="text-charcoal mb-4 text-sm">Escribe 3 palabras clave (ej: humedal, abuela, futuro) y mira la magia.</p>
+                    <input id="story-keywords" type="text" placeholder="Palabras clave separadas por coma" class="w-full p-2 border-2 border-charcoal/30 rounded-md mb-4">
+                    <button id="generate-story-btn" class="btn bg-teal-600 w-full text-white font-bold py-3 px-6 rounded-lg text-lg">Generar Historia ✨</button>
+                    <div id="story-loader" class="mt-4 hidden"><div class="loader"><span class="bounce1"></span><span class="bounce2"></span><span class="bounce3"></span></div></div>
+                    <div id="story-result" class="mt-4 p-4 bg-gray-50 rounded-md border text-charcoal" style="white-space: pre-wrap;"></div>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border-2 border-charcoal text-left flex flex-col">
+                    <h3 class="font-bold text-xl text-teal mb-3 text-center">Mensaje para Compartir</h3>
+                    <p class="text-charcoal mb-4 text-sm">Genera un mensaje para invitar a tus vecinos a votar.</p>
+                     <button id="generate-message-btn" class="btn bg-teal-600 w-full text-white font-bold py-3 px-6 rounded-lg text-lg mt-auto">Generar Mensaje ✨</button>
+                    <div id="message-loader" class="mt-4 hidden"><div class="loader"><span class="bounce1"></span><span class="bounce2"></span><span class="bounce3"></span></div></div>
+                    <div id="message-result-container" class="mt-4 hidden">
+                        <div id="message-result" class="p-4 bg-gray-50 rounded-md border text-charcoal" style="white-space: pre-wrap;"></div>
+                        <button id="copy-message-btn" class="btn bg-orange w-full text-white font-bold py-2 mt-3">Copiar Mensaje</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="lideres" class="texture-bg rounded-2xl p-10 mb-20 text-center">
             <div class="max-w-4xl mx-auto">
-                <h2 class="font-brand text-5xl md:text-6xl text-teal mb-6">Un llamado a nuestros líderes comunales</h2>
+                <h2 class="font-brand text-5xl md:text-6xl text-teal mb-6">Un llamado a líderes y lideresas</h2>
                 <p class="text-lg text-charcoal leading-relaxed mb-8">
-                    Presidentes y miembros de las Juntas de Acción Comunal, este proyecto es una herramienta poderosa para ustedes. Nos ayuda a integrar a los jóvenes, a generar orgullo por nuestro territorio y a crear espacios de encuentro y diálogo. Apoyar "Patrimonio Vivo" es invertir directamente en el fortalecimiento de nuestro tejido social y en un futuro más próspero y unido para Suba. ¡Contamos con su liderazgo para difundir esta iniciativa!
+                    A ustedes, líderes y lideresas de la comunidad, miembros de Juntas de Acción Comunal, colectivos, organizaciones sociales y culturales: este proyecto es una herramienta poderosa para ustedes. Nos ayuda a integrar a los jóvenes, a generar orgullo por nuestro territorio y a crear espacios de encuentro y diálogo. Apoyar "Patrimonio Vivo" es invertir directamente en el fortalecimiento de nuestro tejido social y en un futuro más próspero y unido para Suba. ¡Contamos con su liderazgo para difundir esta iniciativa!
                 </p>
-                 <a href="#vota" class="btn bg-fuchsia text-white font-bold py-4 px-8 rounded-lg text-xl">
-                    ¡Ayúdanos a promocionar el voto!
-                </a>
+                 <a href="#vota" class="btn bg-fuchsia text-white font-bold py-3 px-6 sm:py-4 sm:px-8 rounded-lg text-lg sm:text-xl">¡Ayúdanos a promocionar el voto!</a>
             </div>
         </section>
 
-        <!-- Section 5: Final CTA -->
-        <section id="vota" class="text-center">
-             <h2 class="font-brand text-5xl md:text-6xl text-teal mb-6">¡Tu voto construye comunidad!</h2>
-             <p class="text-xl text-charcoal max-w-3xl mx-auto mb-8">
-                Hacer realidad este sueño es muy fácil. Participa en las votaciones de Presupuestos Participativos de la localidad de Suba y apoya el proyecto que fortalecerá nuestra cultura y el futuro de nuestros jóvenes.
-             </p>
-             <div class="bg-white max-w-2xl mx-auto p-8 rounded-2xl border-4 border-dashed border-orange">
-                <p class="text-charcoal text-2xl font-semibold">Recuerda, el código es:</p>
-                <div class="my-4 px-8 py-4 bg-fuchsia text-white text-7xl font-bold rounded-xl inline-block tracking-widest">
-                    53303
-                </div>
-                <p class="text-charcoal mt-4 text-lg">Busca el punto de votación más cercano o vota de forma virtual en la plataforma de la Alcaldía. ¡Cada voto cuenta!</p>
-             </div>
+        <section id="vota" class="mb-20 text-center texture-bg rounded-2xl py-12">
+            <h2 class="font-brand text-5xl md:text-6xl text-teal mb-6">¡Tu voto construye comunidad!</h2>
+            <div class="bg-white max-w-xl mx-auto p-8 rounded-2xl border-4 border-dashed border-orange">
+                <p class="text-charcoal text-2xl font-semibold">Usa el código:</p>
+                <div class="my-4 px-6 py-4 bg-fuchsia text-white text-7xl font-bold rounded-xl inline-block tracking-widest">53303</div>
+            </div>
+            <p class="text-xl text-charcoal max-w-3xl mx-auto mt-8">Elige cómo quieres participar y ayúdanos a hacer este sueño realidad.</p>
         </section>
 
-    </main>
+        <section id="como-votar" class="mb-20">
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div id="open-chatico-modal" class="bg-white p-8 rounded-2xl border-2 border-charcoal text-center cursor-pointer transform hover:-translate-y-2 transition-transform duration-300">
+                    <div class="text-6xl mb-4">🤖</div>
+                    <h3 class="font-bold text-2xl text-teal mb-2">Voto Virtual con Chatico</h3>
+                    <p class="text-charcoal">Te guiamos paso a paso para que votes desde tu celular por WhatsApp.</p>
+                </div>
+                <div id="go-to-physical-points" class="bg-white p-8 rounded-2xl border-2 border-charcoal text-center cursor-pointer transform hover:-translate-y-2 transition-transform duration-300">
+                    <div class="text-6xl mb-4">📍</div>
+                    <h3 class="font-bold text-2xl text-teal mb-2">Voto Físico en Puntos</h3>
+                    <p class="text-charcoal">Encuentra el punto de votación más cercano a tu barrio, con fechas y horarios.</p>
+                </div>
+            </div>
+        </section>
 
-    <!-- Footer -->
-    <footer class="bg-charcoal text-white mt-20">
-        <div class="container mx-auto px-6 py-10">
-            <div class="text-center">
+        <section id="puntos-votacion" class="mb-20 pt-16 -mt-16">
+             <h2 class="font-brand text-5xl md:text-6xl text-teal mb-10 text-center">Encuentra tu Punto de Votación</h2>
+             <div class="max-w-2xl mx-auto bg-white p-8 rounded-2xl border-2 border-charcoal">
+                <p class="text-charcoal mb-4">Escribe el nombre de tu barrio en Suba y te mostraremos los puntos de votación más cercanos.</p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <input type="text" id="barrio-input" placeholder="Ej: El Rincón, Salitre, Corinto..." class="w-full p-3 border-2 border-charcoal/30 rounded-md">
+                    <button id="buscar-puntos-btn" class="btn bg-orange text-white font-bold py-3 px-8 rounded-lg">Buscar</button>
+                </div>
+                <div id="puntos-loader" class="mt-6 hidden"><div class="loader"><span class="bounce1"></span><span class="bounce2"></span><span class="bounce3"></span></div></div>
+                <div id="puntos-result" class="mt-6 space-y-4"></div>
+             </div>
+        </section>
+        
+        <footer class="bg-charcoal text-white mt-20 -mx-6 -mb-16 px-6 py-10">
+            <div class="container mx-auto text-center">
                 <h3 class="font-brand text-4xl text-white">Turistea with us</h3>
                 <p class="mt-2">Creando experiencias que conectan.</p>
                 <div class="flex justify-center items-center space-x-6 mt-6">
-                    <a href="mailto:turisteawithus@gmail.com" class="flex items-center space-x-2 hover:text-orange transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                        <span>turisteawithus@gmail.com</span>
-                    </a>
-                    <a href="tel:+573208734659" class="flex items-center space-x-2 hover:text-fuchsia transition-colors">
-                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
-                        <span>+57 320 873 4659</span>
-                    </a>
+                    <a href="mailto:turisteawithus@gmail.com" class="flex items-center space-x-2 hover:text-orange transition-colors"><span>turisteawithus@gmail.com</span></a>
+                    <a href="tel:+573208734659" class="flex items-center space-x-2 hover:text-fuchsia transition-colors"><span>+57 320 873 4659</span></a>
                 </div>
             </div>
+        </footer>
+    </main>
+
+    <div id="chatico-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 opacity-0 pointer-events-none">
+        <div class="modal-content bg-white w-full max-w-lg rounded-2xl p-6 transform scale-95 relative">
+            <button id="close-modal-btn" class="absolute top-4 right-4 text-3xl font-bold text-charcoal/50 hover:text-charcoal">&times;</button>
+            <div class="text-center mb-6">
+                <h2 class="font-brand text-4xl text-teal">Guía para Votar con Chatico 🤖</h2>
+                <a href="https://wa.me/573160231524" target="_blank" class="btn bg-green-500 text-white font-bold py-3 px-6 rounded-lg text-lg mt-4 inline-block">¡Haz clic para hablar con Chatico!</a>
+            </div>
+            <div id="carousel-container" class="overflow-hidden">
+                <div class="carousel-slide active text-center"><div class="text-6xl mb-2">1️⃣</div><h3 class="font-bold text-xl mb-2">Inicia el Chat</h3><p class="text-sm sm:text-base">Busca en WhatsApp a **Chatico** (+57 316 0231524) y escríbele "**Hola**". Él te saludará y te dará la bienvenida.</p></div>
+                <div class="carousel-slide text-center"><div class="text-6xl mb-2">2️⃣</div><h3 class="font-bold text-xl mb-2">Elige la Opción Correcta</h3><p class="text-sm sm:text-base">Chatico te mostrará un menú. Responde escribiendo "**Participación**". Luego, en el siguiente menú, selecciona "**Presupuestos Participativos**" y acepta la política de datos.</p></div>
+                <div class="carousel-slide text-center"><div class="text-6xl mb-2">3️⃣</div><h3 class="font-bold text-xl mb-2">Verifica tu Identidad</h3><p class="text-sm sm:text-base">Ten tu cédula a la mano. El sistema te pedirá tu tipo de documento (CC), número y la fecha de expedición para validar que tu voto sea real.</p></div>
+                <div class="carousel-slide text-center"><div class="text-6xl mb-2">4️⃣</div><h3 class="font-bold text-xl mb-2">Selecciona la Localidad</h3><p class="text-sm sm:text-base">Verás una lista de localidades. Busca **11.- Suba**, escribe el número **11** y envíalo. Chatico te pedirá confirmar tu elección.</p></div>
+                <div class="carousel-slide text-center"><div class="text-6xl mb-2">5️⃣</div><h3 class="font-bold text-xl mb-2">¡Vota por el Proyecto!</h3><p class="text-sm sm:text-base">Elige la categoría **4.- Cultura, recreación y deporte**, ingresa nuestro código **53303** y selecciona **Sí** para confirmar. ¡Listo, tu voto ha sido registrado!</p></div>
+            </div>
+            <div class="flex justify-between items-center mt-6">
+                <button id="prev-slide-btn" class="btn bg-gray-300 text-charcoal font-bold py-2 px-4 rounded-lg">Anterior</button>
+                <div id="step-counter" class="font-semibold text-charcoal"></div>
+                <button id="next-slide-btn" class="btn bg-orange text-white font-bold py-2 px-4 rounded-lg">Siguiente</button>
+            </div>
         </div>
-    </footer>
+    </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Existing interactive tabs logic
-            const tabs = {
-                youth: {
-                    button: document.getElementById('tab-youth'),
-                    content: `<strong>Capacidades para el futuro:</strong> Los jóvenes aprenderán a usar herramientas de Inteligencia Artificial, una habilidad clave para el mercado laboral de hoy y del mañana. No solo consumirán tecnología, ¡la usarán para crear! <br><br><strong>Una voz propia:</strong> A través de la escritura y el arte, los participantes podrán expresar sus ideas, contar sus propias historias y desarrollar su creatividad, fortaleciendo su confianza y su identidad.`
-                },
-                community: {
-                    button: document.getElementById('tab-community'),
-                    content: `<strong>Lazos más fuertes:</strong> El proyecto une a jóvenes, abuelos, líderes comunales y colegios, tejiendo una red de colaboración y confianza en el barrio. Se crean espacios para conocernos y trabajar juntos. <br><br><strong>Orgullo local:</strong> Al crear un mural, una cartilla y piezas audiovisuales sobre nuestra propia cultura, generamos un sentimiento de pertenencia y orgullo por vivir en Suba, en el Rincón. Valoramos lo nuestro.`
-                },
-                heritage: {
-                    button: document.getElementById('tab-heritage'),
-                    content: `<strong>Memoria viva:</strong> Rescatamos y honramos el legado Muisca y las historias de nuestros mayores, asegurando que esta riqueza cultural no se pierda y sea conocida por todos. <br><br><strong>Nuevas formas de contar:</strong> Usamos la tecnología para dar nueva vida a nuestro patrimonio. La realidad aumentada en el mural permitirá que todos interactúen con nuestras tradiciones de una forma innovadora y emocionante.`
-                }
-            };
+    document.addEventListener('DOMContentLoaded', function() {
+        const apiKey = ""; // PEGA TU CLAVE API AQUÍ
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
 
-            const contentContainer = document.getElementById('content-container');
-            
-            function updateContent(tabKey) {
+        // Tabs
+        const tabs = {
+            youth: { button: document.getElementById('tab-youth'), content: `<strong>Capacidades para el futuro:</strong> Los jóvenes aprenderán a usar herramientas de Inteligencia Artificial, una habilidad clave para el mercado laboral de hoy y del mañana. <br><br><strong>Una voz propia:</strong> A través del arte, podrán expresar sus ideas y contar sus propias historias, fortaleciendo su confianza e identidad.` },
+            community: { button: document.getElementById('tab-community'), content: `<strong>Lazos más fuertes:</strong> El proyecto une a jóvenes, abuelos, líderes comunitarios y colegios, tejiendo una red de colaboración y confianza en el barrio. <br><br><strong>Orgullo local:</strong> Al crear arte sobre nuestra propia cultura, generamos un sentimiento de pertenencia y orgullo por vivir en Suba.` },
+            heritage: { button: document.getElementById('tab-heritage'), content: `<strong>Memoria viva:</strong> Rescatamos y honramos el legado Muisca y las historias de nuestros mayores, asegurando que esta riqueza cultural no se pierda. <br><br><strong>Nuevas formas de contar:</strong> Usamos la tecnología para dar nueva vida a nuestro patrimonio de una forma innovadora y emocionante.` }
+        };
+        const contentContainer = document.getElementById('content-container');
+        function updateContent(tabKey) {
+            if(tabs[tabKey]) {
                 contentContainer.innerHTML = tabs[tabKey].content;
                 Object.values(tabs).forEach(tab => tab.button.classList.remove('active'));
                 tabs[tabKey].button.classList.add('active');
             }
-
-            Object.keys(tabs).forEach(key => {
+        }
+        Object.keys(tabs).forEach(key => {
+            if (tabs[key].button) {
                 tabs[key].button.addEventListener('click', () => updateContent(key));
-            });
-            
-            updateContent('youth');
+            }
+        });
+        updateContent('youth');
 
-            // NEW Gemini API Integration Logic
-            const storyKeywordsInput = document.getElementById('story-keywords');
-            const generateStoryBtn = document.getElementById('generate-story-btn');
-            const storyLoader = document.getElementById('story-loader');
-            const storyResult = document.getElementById('story-result');
-
-            const generateMessageBtn = document.getElementById('generate-message-btn');
-            const messageLoader = document.getElementById('message-loader');
-            const messageResultContainer = document.getElementById('message-result-container');
-            const messageResult = document.getElementById('message-result');
-            const copyMessageBtn = document.getElementById('copy-message-btn');
-
-            const apiKey = "AIzaSyBZ_cW20Ri2qkp65g-ihuX5CHcXZfUyjlU"; // Remember to paste your API Key here
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-
-            async function callGemini(prompt, retries = 3, delay = 1000) {
-                const payload = {
-                    contents: [{ parts: [{ text: prompt }] }],
-                };
-
-                for (let i = 0; i < retries; i++) {
-                    try {
-                        const response = await fetch(apiUrl, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(payload)
-                        });
-
-                        if (!response.ok) {
-                           throw new Error(`HTTP error! status: ${response.status}`);
-                        }
-
-                        const result = await response.json();
-                        const candidate = result.candidates?.[0];
-
-                        if (candidate && candidate.content?.parts?.[0]?.text) {
-                            return candidate.content.parts[0].text;
-                        } else {
-                            throw new Error("Respuesta inválida de la API.");
-                        }
-                    } catch (error) {
-                        if (i === retries - 1) {
-                           console.error("Error fetching from Gemini API:", error);
-                           return "Lo sentimos, no pudimos generar una respuesta en este momento. Inténtalo de nuevo.";
-                        }
-                        await new Promise(res => setTimeout(res, delay * Math.pow(2, i)));
-                    }
+        // Gemini Logic
+        const storyKeywordsInput = document.getElementById('story-keywords');
+        const generateStoryBtn = document.getElementById('generate-story-btn');
+        const storyLoader = document.getElementById('story-loader');
+        const storyResult = document.getElementById('story-result');
+        const generateMessageBtn = document.getElementById('generate-message-btn');
+        const messageLoader = document.getElementById('message-loader');
+        const messageResultContainer = document.getElementById('message-result-container');
+        const messageResult = document.getElementById('message-result');
+        const copyMessageBtn = document.getElementById('copy-message-btn');
+        
+        async function callGemini(prompt, retries = 3, delay = 1000) {
+            const payload = { contents: [{ parts: [{ text: prompt }] }] };
+            for (let i = 0; i < retries; i++) {
+                try {
+                    const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                    if (!response.ok) { throw new Error(`HTTP error! status: ${response.status}`); }
+                    const result = await response.json();
+                    const candidate = result.candidates?.[0];
+                    if (candidate && candidate.content?.parts?.[0]?.text) { return candidate.content.parts[0].text; }
+                    else { throw new Error("Respuesta inválida de la API."); }
+                } catch (error) {
+                    if (i === retries - 1) { console.error("Error fetching from Gemini API:", error); return "Lo sentimos, no pudimos generar una respuesta en este momento. Inténtalo de nuevo."; }
+                    await new Promise(res => setTimeout(res, delay * Math.pow(2, i)));
                 }
             }
+        }
 
-
+        if(generateStoryBtn) {
             generateStoryBtn.addEventListener('click', async () => {
                 const keywords = storyKeywordsInput.value;
-                if (!keywords.trim()) {
-                    storyResult.textContent = "Por favor, ingresa al menos una palabra clave.";
-                    return;
-                }
-
+                if (!keywords.trim()) { storyResult.textContent = "Por favor, ingresa al menos una palabra clave."; return; }
                 storyLoader.style.display = 'block';
                 storyResult.textContent = '';
                 generateStoryBtn.disabled = true;
-
                 const prompt = `Escribe un micro-cuento inspirador de dos párrafos para un joven de Suba, Bogotá. El cuento debe conectar la herencia ancestral Muisca con un futuro tecnológico y esperanzador. Usa estas palabras clave: ${keywords}. El tono debe ser juvenil y optimista.`;
-                
-                const generatedStory = await callGemini(prompt);
-                storyResult.textContent = generatedStory;
-                
+                storyResult.textContent = await callGemini(prompt);
                 storyLoader.style.display = 'none';
                 generateStoryBtn.disabled = false;
             });
+        }
 
+        if(generateMessageBtn) {
             generateMessageBtn.addEventListener('click', async () => {
                 messageLoader.style.display = 'block';
                 messageResultContainer.style.display = 'none';
                 generateMessageBtn.disabled = true;
-
-                const prompt = `Escribe un mensaje corto y amigable para WhatsApp para invitar a los vecinos del barrio El Rincón en Suba, Bogotá, a votar por el proyecto 'Patrimonio Vivo'. El mensaje debe ser entusiasta, mencionar que es para apoyar a los jóvenes y la cultura del barrio, y que se usan herramientas de futuro como la IA. Incluye el código de votación 53303 y un llamado a la acción claro. Incluye emojis relevantes.`;
-
-                const generatedMessage = await callGemini(prompt);
-                messageResult.textContent = generatedMessage;
-
+                const prompt = `Escribe un mensaje corto y amigable para WhatsApp para invitar a los vecinos del barrio El Rincón en Suba, Bogotá, a votar por el proyecto 'Patrimonio Vivo'. El mensaje debe ser entusiasta, mencionar que se usan herramientas de futuro como la IA y animar a votar. Incluye el código de votación 53303 y emojis. MUY IMPORTANTE: El mensaje DEBE terminar con un enlace para que la gente conozca más del proyecto. El enlace es: https://turisteawithus-jpg.github.io/Patrimonio-Vivo-El-Rinc-n/`;
+                messageResult.textContent = await callGemini(prompt);
                 messageLoader.style.display = 'none';
                 messageResultContainer.style.display = 'block';
                 generateMessageBtn.disabled = false;
             });
+        }
 
+        if(copyMessageBtn) {
             copyMessageBtn.addEventListener('click', () => {
                 const textToCopy = messageResult.textContent;
                 const tempTextarea = document.createElement('textarea');
@@ -385,16 +306,156 @@
                 try {
                     document.execCommand('copy');
                     copyMessageBtn.textContent = '¡Copiado!';
-                    setTimeout(() => {
-                        copyMessageBtn.textContent = 'Copiar Mensaje';
-                    }, 2000);
-                } catch (err) {
-                    console.error('No se pudo copiar el texto', err);
-                    copyMessageBtn.textContent = 'Error al copiar';
-                }
+                    setTimeout(() => { copyMessageBtn.textContent = 'Copiar Mensaje'; }, 2000);
+                } catch (err) { console.error('No se pudo copiar el texto', err); copyMessageBtn.textContent = 'Error al copiar'; }
                 document.body.removeChild(tempTextarea);
             });
+        }
+        
+        // Modal, Carousel, and Voting Points Logic
+        const openModalBtn = document.getElementById('open-chatico-modal');
+        const goToPhysicalPointsBtn = document.getElementById('go-to-physical-points');
+        const modal = document.getElementById('chatico-modal');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const puntosVotacionSection = document.getElementById('puntos-votacion');
+        const slides = document.querySelectorAll('.carousel-slide');
+        const prevBtn = document.getElementById('prev-slide-btn');
+        const nextBtn = document.getElementById('next-slide-btn');
+        const stepCounter = document.getElementById('step-counter');
+        let currentSlide = 0;
+        function showSlide(n) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[n].classList.add('active');
+            stepCounter.textContent = `Paso ${n + 1} de ${slides.length}`;
+            prevBtn.disabled = n === 0;
+            prevBtn.style.opacity = n === 0 ? '0.5' : '1';
+            nextBtn.textContent = n === slides.length - 1 ? 'Finalizar' : 'Siguiente';
+        }
+        prevBtn.addEventListener('click', () => { if (currentSlide > 0) { currentSlide--; showSlide(currentSlide); } });
+        nextBtn.addEventListener('click', () => {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            } else {
+                closeModal();
+            }
         });
+        function openModal() {
+            currentSlide = 0;
+            showSlide(currentSlide);
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modal.querySelector('.modal-content').classList.remove('scale-95');
+        }
+        function closeModal() {
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modal.querySelector('.modal-content').classList.add('scale-95');
+        }
+        openModalBtn.addEventListener('click', openModal);
+        closeModalBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+        goToPhysicalPointsBtn.addEventListener('click', () => {
+            puntosVotacionSection.scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        // Voting Points Search
+        const barrioInput = document.getElementById('barrio-input');
+        const buscarPuntosBtn = document.getElementById('buscar-puntos-btn');
+        const puntosResult = document.getElementById('puntos-result');
+        const puntosLoader = document.getElementById('puntos-loader');
+        
+        const votingLocations = [
+            { nombre: "ALCALDÍA LOCAL DE SUBA", direccion: "Calle 146 C Bis #90-57", barrios_cercanos: ["suba", "suba centro", "alcaldia", "provenza", "las delicias", "prados de suba", "pradera de suba", "san francisco", "miraflores", "villa susana", "villa hermosa", "villa esperanza"], dias: "Varios días de Septiembre y Octubre", horarios: "9:00am - 4:00pm" },
+            { nombre: "Colegio Jaime Niño Diez", direccion: "Carrera 109 B #145-17", barrios_cercanos: ["pinar", "pinar de suba", "tuna alta", "jaime niño"], dias: "26 de Septiembre", horarios: "7:00am - 12:00pm y 4:00pm - 7:00pm" },
+            { nombre: "JAC Laguito", direccion: "Calle 129F # 98 A Bis-39", barrios_cercanos: ["el laguito", "lago de suba", "rincón", "la chucua", "trinitaria"], dias: "27 de Septiembre y 11 de Octubre", horarios: "12:00pm - 4:00pm" },
+            { nombre: "Plazoleta principal del Barrio La Gaitana - JAC Gaitana", direccion: "Carrera 125 #134-68", barrios_cercanos: ["gaitana", "la gaitana", "lisboa", "villa cindy", "el palmar"], dias: "27 de Septiembre", horarios: "1:00pm - 5:00pm" },
+            { nombre: "Salón Comunal JAC Barrio Gaitana", direccion: "Carrera 125B #134-64", barrios_cercanos: ["gaitana", "la gaitana", "lisboa", "villa cindy"], dias: "5, 17, 19 de Octubre", horarios: "9:00am - 12:00pm" },
+            { nombre: "Salón Comunal San Pedro Suba", direccion: "Carrera 88 #136-68", barrios_cercanos: ["san pedro", "san pedro de suba", "rincón", "rincón de suba", "la palma", "la manuelita", "ciudad hunza"], dias: "27 de Sep, 4, 11, 18, 19, 25 de Oct", horarios: "2:00pm - 5:00pm" },
+            { nombre: "Salón Comunal El Salitre", direccion: "Calle 159a #90b-80", barrios_cercanos: ["el salitre", "salitre", "suba", "niza"], dias: "28 de Septiembre", horarios: "10:00am - 2:00.pm" },
+            { nombre: "Lombardia", direccion: "Carrera 109 #142-51", barrios_cercanos: ["lombardia", "pinos de lombardia", "los almendros"], dias: "28 de Septiembre", horarios: "9:00am - 12:00pm" },
+            { nombre: "Salón Comunal Alcaparros", direccion: "Carrera 109a #132b-16", barrios_cercanos: ["alcaparros", "rincón", "aures", "la esperanza"], dias: "28 de Septiembre y 5 de Octubre", horarios: "28 Sep: 9am-12pm, 5 Oct: 11am-2pm" },
+            { nombre: "Portal de Suba", direccion: "Avenida Suba con Avenida Cali", barrios_cercanos: ["portal suba", "aurora", "compartir", "tibabuyes", "la campiña", "alcázar de suba"], dias: "1 y 4 de Octubre", horarios: "Jornadas de 8am-12pm y 2pm-6pm" },
+            { nombre: "Salón Comunal Aures 2", direccion: "Cra 105B #129D 92", barrios_cercanos: ["aures", "aures ii", "rincón", "la gaitana"], dias: "1 y 10 de Octubre", horarios: "1 Oct: 10am-2pm, 10 Oct: 8am-12pm" },
+            { nombre: "PARQUE GLORIA LARA", direccion: "Calle 130F #96 15", barrios_cercanos: ["gloria lara", "gloria lara de echeverri", "rincón", "villa elisa"], dias: "2 y 4 de Octubre", horarios: "2 Oct: 8am-12pm, 4 Oct: 9:30am-1pm" },
+            { nombre: "Fiesta suba cc", direccion: "Cll 147 no 101 56", barrios_cercanos: ["imperial", "fontanar", "centro suba", "turingia", "almendros"], dias: "2, 3, 4, 5 de Octubre", horarios: "10:00am - 2:00pm" },
+            { nombre: "Parque Nuevo Suba", direccion: "Cra 90 #145-39", barrios_cercanos: ["nuevo suba", "las delicias", "pinar", "suba centro"], dias: "3, 4, 17, 18, 25 de Octubre", horarios: "3 Oct: 8am-12pm; 4, 17, 18, 25 Oct: 1pm-5pm" },
+            { nombre: "Casa cultura rincón", direccion: "Calle 128c 96-57", barrios_cercanos: ["rincón", "el rincón", "la palma", "san cayetano", "el rubi"], dias: "3 de Octubre", horarios: "2:00pm - 5:00pm" },
+            { nombre: "COLEGIO GERARDO PAREDES JORNADA NOCTURNA", direccion: "CRA 94C No 129A-04", barrios_cercanos: ["gerardo paredes", "rincón", "villa elisa", "gloria lara"], dias: "3 de Octubre", horarios: "6:00PM - 9:00PM" },
+            { nombre: "Parque Altos del Rincon", direccion: "Carrera 87b #129 b", barrios_cercanos: ["altos del rincón", "rincón", "el rincón", "ciudad hunza", "altos de la esperanza"], dias: "4, 5, 11, 12, 18, 19 de Octubre", horarios: "1:00pm - 5:00pm" },
+            { nombre: "Iglesia Tiempos de Refrigerio", direccion: "Avenida Ciudad de Cali No 139-35", barrios_cercanos: ["nueva tibabuyes", "fontanar", "pinos", "compartir"], dias: "5, 12, 19 de Octubre", horarios: "8:00am - 2:00pm" },
+            { nombre: "Parroquia San Juan Bautista Scalabrini - Lisboa", direccion: "Calle 136 #153-86", barrios_cercanos: ["lisboa", "la gaitana", "villa cindy", "verona"], dias: "5 y 18 de Octubre", horarios: "5 Oct: 8am-12pm y 5pm-7pm; 18 Oct: 2pm-6pm" },
+            { nombre: "TELECOM ARRAYANES SALON COMUNAL", direccion: "Cra 96 #128C 50", barrios_cercanos: ["telecom", "arrayanes", "rincón", "san cayetano"], dias: "6 de Octubre", horarios: "8:00AM - 12:00PM" },
+            { nombre: "EL RUBI SALON COMUNAL", direccion: "Calle 128Bis #92B 12", barrios_cercanos: ["el rubi", "rincón", "la palma"], dias: "10 y 19 de Octubre", horarios: "10 Oct: 4pm-8pm, 19 Oct: 9am-1pm" },
+            { nombre: "PALMA ALDEA SALON COMUNAL", direccion: "Cra 89 #130A 21", barrios_cercanos: ["palma aldea", "rincón", "la manuelita"], dias: "11 y 26 de Octubre", horarios: "11 Oct: 8am-1pm, 26 Oct: 9am-1pm" },
+            { nombre: "EL ROSAL SALON COMUNAL", direccion: "Cra 100 #131 11", barrios_cercanos: ["el rosal", "rincón", "corinto"], dias: "11 de Octubre", horarios: "9:00AM - 12:00PM" },
+            { nombre: "Parque Pinos de Lombardía", direccion: "Calle 152 B #107-50", barrios_cercanos: ["pinos de lombardia", "lombardia", "turingia"], dias: "11, 12, 13 de Octubre", horarios: "9:00am - 5:00pm" },
+            { nombre: "CIUDAD HUNZA PARROQUIA", direccion: "Cra 87D #130 20", barrios_cercanos: ["hunza", "ciudad hunza", "rincón", "cerro"], dias: "13 y 14 de Octubre", horarios: "8:00am - 12:00pm" },
+            { nombre: "COLEGIO TIBABUYES UNIVERSAL (IED)", direccion: "Carrera 128A #139-13", barrios_cercanos: ["tibabuyes universal", "tibabuyes", "la gaitana"], dias: "15, 16 y 17 de Octubre", horarios: "Jornadas en la mañana (7:30-11am) y tarde (1:30-5pm) en sus diferentes sedes." },
+            { nombre: "ALTOS ESPERANZA SALON COMUNAL", direccion: "Cra 89 #127B 06", barrios_cercanos: ["altos de la esperanza", "rincón", "altos de chozica"], dias: "17 y 19 de Octubre", horarios: "17 Oct: 7am-1pm, 19 Oct: 9am-3pm" },
+            { nombre: "VILLAS DEL RINCON SALON COMUNAL", direccion: "Cra 100A #128B 21", barrios_cercanos: ["villas del rincón", "rincón", "corinto"], dias: "18 y 19 de Octubre", horarios: "9:00am - 1:00pm" },
+            { nombre: "IED REPUBLICA DOMINICANA Sede B", direccion: "Carrera 123 #129 D-55", barrios_cercanos: ["republica dominicana", "gaitana"], dias: "21 de Octubre", horarios: "Dos jornadas: 9am-11am y 1pm-3pm" }
+        ];
+
+        const barrioUPZMap = {
+            "acacias": "Suba", "alaska": "Suba", "alcázar de suba": "Suba", "almendros de suba": "Suba", "almendros norte": "Suba", "alto de la toma": "Suba", "bosques de san jorge": "Suba", "campanella": "Suba", "el pencil": "Suba", "el pinar": "Suba", "el pino": "Suba", "el pórtico": "Suba", "el salitre": "Suba", "java": "Suba", "la campiña": "Suba", "la fontana": "Suba", "las flores": "Suba", "las orquídeas": "Suba", "londres": "Suba", "miraflores": "Suba", "monarcas": "Suba", "navetas": "Suba", "pinar de suba": "Suba", "portal de las mercedes": "Suba", "pradera de suba": "Suba", "prados de suba": "Suba", "rincón de santa inés": "Suba", "san francisco": "Suba", "santa isabel": "Suba", "suba centro": "Suba", "suba compartir": "Suba", "tuna alta": "Suba", "tuna baja": "Suba", "turingia": "Suba", "vereda suba cerros": "Suba", "villa del campo": "Suba", "villa esperanza": "Suba", "villa hermosa": "Suba", "villa susana": "Suba",
+            "alcaparros": "El Rincón", "almirante colón": "El Rincón", "almonacid": "El Rincón", "altos de chozica": "El Rincón", "altos de la esperanza": "El Rincón", "amberes": "El Rincón", "antonio granados": "El Rincón", "arrayanes": "El Rincón", "aures": "El Rincón", "bochalema": "El Rincón", "catalina": "El Rincón", "ciudad hunza": "El Rincón", "ciudadela cafam": "El Rincón", "costa azul": "El Rincón", "costa rica": "El Rincón", "el aguinaldo": "El Rincón", "el arenal": "El Rincón", "el carmen": "El Rincón", "el cerezo": "El Rincón", "el cóndor": "El Rincón", "el jordán-la esperanza": "El Rincón", "el naranjal": "El Rincón", "el ocal": "El Rincón", "el palmar": "El Rincón", "el pórtico": "El Rincón", "el progreso": "El Rincón", "el refugio de suba": "El Rincón", "el rubi": "El Rincón", "el tabor": "El Rincón", "gloria lara de echeverri": "El Rincón", "guillermo núñez": "El Rincón", "jaime bermeo": "El Rincón", "japón": "El Rincón", "java ii sector": "El Rincón", "la aguadita": "El Rincón", "la alameda": "El Rincón", "la aurora": "El Rincón", "la chucua": "El Rincón", "la esmeralda": "El Rincón", "la esperanza (calle 131 a)": "El Rincón", "la estanzuela": "El Rincón", "la flor": "El Rincón", "la flora": "El Rincón", "la manuelita": "El Rincón", "la palma": "El Rincón", "lago de suba": "El Rincón", "las flores": "El Rincón", "lombardia": "El Rincón", "los arrayanes": "El Rincón", "los naranjos": "El Rincón", "los nogales": "El Rincón", "naranjos altos": "El Rincón", "nuevo corinto": "El Rincón", "palma aldea": "El Rincón", "potrerillo": "El Rincón", "puerta del sol": "El Rincón", "rincón de suba": "El Rincón", "rincón el cóndor": "El Rincón", "rincón-escuela": "El Rincón", "riobamba": "El Rincón", "rodrigo lara bonilla": "El Rincón", "san cayetano": "El Rincón", "san isidro norte": "El Rincón", "san jorge": "El Rincón", "san miguel": "El Rincón", "san pedro": "El Rincón", "santa ana de suba": "El Rincón", "taberin": "El Rincón", "telecom arrayanes": "El Rincón", "teusaquillo de suba": "El Rincón", "tibabuyes": "El Rincón", "trinitaria": "El Rincón", "villa alexandra": "El Rincón", "villa catalina": "El Rincón", "villa elisa": "El Rincón", "villa maría": "El Rincón", "villas del rincón": "El Rincón",
+            "atenas": "Tibabuyes", "berlín": "Tibabuyes", "bilbao": "Tibabuyes", "cañiza i, ii y iii": "Tibabuyes", "carolina ii y iii": "Tibabuyes", "compartir": "Tibabuyes", "el cedro": "Tibabuyes", "la gaitana": "Tibabuyes", "la isabela": "Tibabuyes", "lisboa": "Tibabuyes", "los nogales de tibabuyes": "Tibabuyes", "miramar": "Tibabuyes", "nueva tibabuyes": "Tibabuyes", "nuevo corinto": "Tibabuyes", "prados de santa bárbara": "Tibabuyes", "rincón de boyacá": "Tibabuyes", "sabana de tibabuyes": "Tibabuyes", "san carlos de suba": "Tibabuyes", "san carlos de tibabuyes": "Tibabuyes", "san pedro de tibabuyes": "Tibabuyes", "santa cecilia": "Tibabuyes", "santa rita": "Tibabuyes", "tibabuyes universal": "Tibabuyes", "toscana": "Tibabuyes", "vereda suba-rincón": "Tibabuyes", "vereda tibabuyes": "Tibabuyes", "verona": "Tibabuyes", "villa cindy": "Tibabuyes", "villa de las flores": "Tibabuyes", "villa gloria": "Tibabuyes"
+        };
+        
+        function findLocations() {
+            const userInput = barrioInput.value.toLowerCase().trim();
+            if (!userInput) { puntosResult.innerHTML = `<p class="text-red-600">Por favor, escribe un barrio para buscar.</p>`; return; }
+            puntosLoader.style.display = 'block';
+            puntosResult.innerHTML = '';
+            
+            setTimeout(() => {
+                let results = votingLocations.filter(location => 
+                    location.barrios_cercanos.some(barrio => barrio.includes(userInput)) || location.nombre.toLowerCase().includes(userInput)
+                );
+
+                let fallbackMessage = '';
+
+                if (results.length === 0) {
+                    const searchedUPZ = barrioUPZMap[userInput];
+                    if (searchedUPZ) {
+                        const barriosInSameUPZ = Object.keys(barrioUPZMap).filter(barrio => barrioUPZMap[barrio] === searchedUPZ);
+                        results = votingLocations.filter(location => 
+                            location.barrios_cercanos.some(b => barriosInSameUPZ.includes(b))
+                        );
+                        if (results.length > 0) {
+                             fallbackMessage = `<p class="mb-4 text-sm text-gray-600">No encontramos un punto de votación directamente en tu barrio. Estos son los más cercanos en tu zona (UPZ ${searchedUPZ}):</p>`;
+                        }
+                    }
+                }
+
+                puntosLoader.style.display = 'none';
+
+                if (results.length === 0) {
+                    puntosResult.innerHTML = `<p>No se encontraron puntos de votación para "${barrioInput.value}". Intenta con un barrio vecino o el nombre del lugar.</p>`;
+                } else {
+                    let html = results.map(location => {
+                        const encodedAddress = encodeURIComponent(`${location.direccion}, Bogotá, Colombia`);
+                        const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodedAddress}`;
+                        return `
+                        <div class="border border-charcoal/20 p-4 rounded-lg">
+                            <h4 class="font-bold text-teal text-lg">${location.nombre}</h4>
+                            <p><span class="font-semibold">Dirección:</span> 
+                                <a href="${mapsUrl}" target="_blank" class="text-teal-600 hover:underline">
+                                    ${location.direccion} 📍 <span class="text-sm italic text-gray-500">(haz clic para ver la ruta)</span>
+                                </a>
+                            </p>
+                            <p><span class="font-semibold">Días:</span> ${location.dias}</p>
+                            <p><span class="font-semibold">Horarios:</span> ${location.horarios}</p>
+                        </div>
+                    `}).join('');
+                    puntosResult.innerHTML = fallbackMessage + html;
+                }
+            }, 500);
+        }
+        
+        buscarPuntosBtn.addEventListener('click', findLocations);
+        barrioInput.addEventListener('keyup', (e) => { if (e.key === 'Enter') findLocations(); });
+
+    });
     </script>
 </body>
 </html>
