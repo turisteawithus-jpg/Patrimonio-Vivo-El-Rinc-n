@@ -41,6 +41,12 @@
             transform: translateY(2px) translateX(2px);
             box-shadow: 2px 2px 0px #1F2937; /* Updated shadow color */
         }
+        .btn-gemini {
+             background-color: #008080;
+        }
+        .btn-gemini:hover {
+            background-color: #006666;
+        }
         .interactive-tab {
             transition: all 0.3s ease;
             border-bottom-width: 4px;
@@ -53,6 +59,24 @@
         .texture-bg {
             background-color: #FAF9F6; /* Kept the light texture on specific sections */
             background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23008080' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .loader {
+            display: inline-block;
+            text-align: center;
+        }
+        .loader span {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background-color: #008080;
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+        .loader .bounce1 { animation-delay: -0.32s; }
+        .loader .bounce2 { animation-delay: -0.16s; }
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1.0); }
         }
     </style>
 </head>
@@ -136,6 +160,53 @@
                 </div>
             </div>
         </section>
+
+        <!-- NEW Gemini Section -->
+        <section id="gemini-interaction" class="mb-20">
+            <h2 class="font-brand text-5xl md:text-6xl text-teal mb-10 text-center">Participa con la IA ✨</h2>
+            <div class="max-w-4xl mx-auto text-center">
+                <p class="text-lg text-charcoal leading-relaxed mb-8">
+                    Experimenta el poder creativo de la Inteligencia Artificial que usaremos en nuestros talleres. ¡Inspírate y ayúdanos a difundir la palabra!
+                </p>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Story Generator -->
+                    <div class="bg-white p-6 rounded-2xl border-2 border-charcoal text-left">
+                        <h3 class="font-bold text-xl text-teal mb-3 text-center">Crea un Micro-Cuento</h3>
+                        <p class="text-charcoal mb-4 text-sm">Escribe 3 palabras clave (ej: humedal, abuela, futuro) y mira la magia.</p>
+                        <input id="story-keywords" type="text" placeholder="Palabras clave separadas por coma" class="w-full p-2 border-2 border-charcoal/30 rounded-md mb-4">
+                        <button id="generate-story-btn" class="btn btn-gemini w-full text-white font-bold py-3 px-6 rounded-lg text-lg">
+                            Generar Historia ✨
+                        </button>
+                        <div id="story-loader" class="mt-4 hidden">
+                            <div class="loader">
+                                <span class="bounce1"></span><span class="bounce2"></span><span class="bounce3"></span>
+                            </div>
+                        </div>
+                        <div id="story-result" class="mt-4 p-4 bg-gray-50 rounded-md border border-gray-200 text-charcoal text-base leading-relaxed" style="white-space: pre-wrap;"></div>
+                    </div>
+                    <!-- Message Generator -->
+                    <div class="bg-white p-6 rounded-2xl border-2 border-charcoal text-left flex flex-col">
+                        <h3 class="font-bold text-xl text-teal mb-3 text-center">Mensaje para Compartir</h3>
+                        <p class="text-charcoal mb-4 text-sm">Genera un mensaje de WhatsApp para invitar a tus vecinos a votar.</p>
+                         <button id="generate-message-btn" class="btn btn-gemini w-full text-white font-bold py-3 px-6 rounded-lg text-lg mt-auto">
+                            Generar Mensaje ✨
+                        </button>
+                        <div id="message-loader" class="mt-4 hidden">
+                            <div class="loader">
+                                <span class="bounce1"></span><span class="bounce2"></span><span class="bounce3"></span>
+                            </div>
+                        </div>
+                        <div id="message-result-container" class="mt-4 hidden">
+                            <div id="message-result" class="p-4 bg-gray-50 rounded-md border border-gray-200 text-charcoal text-base" style="white-space: pre-wrap;"></div>
+                            <button id="copy-message-btn" class="btn bg-orange w-full text-white font-bold py-2 px-4 rounded-lg text-base mt-3">
+                                Copiar Mensaje
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         
         <!-- Section 4: Call to Leaders -->
         <section id="lideres" class="texture-bg rounded-2xl p-10 mb-20 text-center">
@@ -189,6 +260,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Existing interactive tabs logic
             const tabs = {
                 youth: {
                     button: document.getElementById('tab-youth'),
@@ -217,6 +289,111 @@
             });
             
             updateContent('youth');
+
+            // NEW Gemini API Integration Logic
+            const storyKeywordsInput = document.getElementById('story-keywords');
+            const generateStoryBtn = document.getElementById('generate-story-btn');
+            const storyLoader = document.getElementById('story-loader');
+            const storyResult = document.getElementById('story-result');
+
+            const generateMessageBtn = document.getElementById('generate-message-btn');
+            const messageLoader = document.getElementById('message-loader');
+            const messageResultContainer = document.getElementById('message-result-container');
+            const messageResult = document.getElementById('message-result');
+            const copyMessageBtn = document.getElementById('copy-message-btn');
+
+            const apiKey = ""; // Canvas will provide this
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            async function callGemini(prompt, retries = 3, delay = 1000) {
+                const payload = {
+                    contents: [{ parts: [{ text: prompt }] }],
+                };
+
+                for (let i = 0; i < retries; i++) {
+                    try {
+                        const response = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+
+                        if (!response.ok) {
+                           throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+
+                        const result = await response.json();
+                        const candidate = result.candidates?.[0];
+
+                        if (candidate && candidate.content?.parts?.[0]?.text) {
+                            return candidate.content.parts[0].text;
+                        } else {
+                            throw new Error("Respuesta inválida de la API.");
+                        }
+                    } catch (error) {
+                        if (i === retries - 1) {
+                           console.error("Error fetching from Gemini API:", error);
+                           return "Lo sentimos, no pudimos generar una respuesta en este momento. Inténtalo de nuevo.";
+                        }
+                        await new Promise(res => setTimeout(res, delay * Math.pow(2, i)));
+                    }
+                }
+            }
+
+
+            generateStoryBtn.addEventListener('click', async () => {
+                const keywords = storyKeywordsInput.value;
+                if (!keywords.trim()) {
+                    storyResult.textContent = "Por favor, ingresa al menos una palabra clave.";
+                    return;
+                }
+
+                storyLoader.style.display = 'block';
+                storyResult.textContent = '';
+                generateStoryBtn.disabled = true;
+
+                const prompt = `Escribe un micro-cuento inspirador de dos párrafos para un joven de Suba, Bogotá. El cuento debe conectar la herencia ancestral Muisca con un futuro tecnológico y esperanzador. Usa estas palabras clave: ${keywords}. El tono debe ser juvenil y optimista.`;
+                
+                const generatedStory = await callGemini(prompt);
+                storyResult.textContent = generatedStory;
+                
+                storyLoader.style.display = 'none';
+                generateStoryBtn.disabled = false;
+            });
+
+            generateMessageBtn.addEventListener('click', async () => {
+                messageLoader.style.display = 'block';
+                messageResultContainer.style.display = 'none';
+                generateMessageBtn.disabled = true;
+
+                const prompt = `Escribe un mensaje corto y amigable para WhatsApp para invitar a los vecinos del barrio El Rincón en Suba, Bogotá, a votar por el proyecto 'Patrimonio Vivo'. El mensaje debe ser entusiasta, mencionar que es para apoyar a los jóvenes y la cultura del barrio, y que se usan herramientas de futuro como la IA. Incluye el código de votación 53303 y un llamado a la acción claro. Incluye emojis relevantes.`;
+
+                const generatedMessage = await callGemini(prompt);
+                messageResult.textContent = generatedMessage;
+
+                messageLoader.style.display = 'none';
+                messageResultContainer.style.display = 'block';
+                generateMessageBtn.disabled = false;
+            });
+
+            copyMessageBtn.addEventListener('click', () => {
+                const textToCopy = messageResult.textContent;
+                const tempTextarea = document.createElement('textarea');
+                tempTextarea.value = textToCopy;
+                document.body.appendChild(tempTextarea);
+                tempTextarea.select();
+                try {
+                    document.execCommand('copy');
+                    copyMessageBtn.textContent = '¡Copiado!';
+                    setTimeout(() => {
+                        copyMessageBtn.textContent = 'Copiar Mensaje';
+                    }, 2000);
+                } catch (err) {
+                    console.error('No se pudo copiar el texto', err);
+                    copyMessageBtn.textContent = 'Error al copiar';
+                }
+                document.body.removeChild(tempTextarea);
+            });
         });
     </script>
 </body>
