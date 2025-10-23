@@ -86,14 +86,37 @@
         .modal-content { transition: transform 0.3s ease; }
         .carousel-slide { display: none; }
         .carousel-slide.active { display: block; }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 15px rgba(192, 78, 156, 0.4), 0 0 0 0 rgba(192, 78, 156, 0.4); }
+            50% { box-shadow: 0 0 30px rgba(192, 78, 156, 0.9), 0 0 0 10px rgba(192, 78, 156, 0.2); }
+        }
+        .animate-pulse-glow {
+            animation: pulse-glow 2.5s infinite ease-in-out;
+            /* Asegura que el glow esté sobre el contenido */
+            position: relative; 
+            z-index: 2; 
+        }
+
+        /* Estilo específico para resaltar el recuadro de Chatico */
+        #open-chatico-modal {
+            background-color: #C04E9C; /* Fondo fucsia más sólido */
+            border-color: #FFFFFF; /* Borde blanco puro para contraste máximo */
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.7), 0 0 0 15px rgba(255, 255, 255, 0.3); /* Sombra blanca aún más intensa */
+            animation: super-pulse-glow 2s infinite ease-in-out;
+        }
+
+        @keyframes super-pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 0 0 rgba(255, 255, 255, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(255, 255, 255, 1), 0 0 0 15px rgba(255, 255, 255, 0.4); }
+        }
     </style>
 </head>
 <body class="antialiased">
 
     <header class="bg-gradient-splash" id="header">
         <div class="container mx-auto px-6 py-12 text-center relative z-10">
-            <h2 class="font-brand text-4xl md:text-5xl text-btn-teal mt-6">Presenta:</h2>
-            <h1 class="font-brand text-5xl md:text-7xl mt-4 leading-tight">
+            <h1 class="font-brand text-5xl md:text-7xl mt-6 leading-tight">
                 <span class="text-fuchsia-main">Patrimonio</span> <span class="text-orange-main">Vivo</span><br class="hidden md:block"> <span class="text-turquoise-main">"El Rincón"</span>
             </h1>
             <p class="text-gray-200 text-xl md:text-2xl mt-6 max-w-3xl mx-auto">Conectando comunidad, naturaleza y futuro en el corazón de Suba.</p>
@@ -132,30 +155,12 @@
 
     <main class="container mx-auto px-6 py-16">
 
-        <section id="vota-final" class="mb-20 text-center bg-gradient-splash rounded-3xl py-12 shadow-xl relative">
-            <div class="relative z-10">
-                <h2 class="font-brand text-6xl md:text-7xl mb-6 leading-none">
-                    <span class="text-btn-teal">¡VOTA</span> <span class="text-btn-orange">AHORA!</span>
-                </h2>
-                
-                <!-- Icono Central --><!-- This div has been removed based on user request --><p class="text-xl md:text-2xl font-semibold mb-8 text-gray-200">Presupuesto Participativo 2025</p>
-
-                <!-- Botón de Voto Principal (solo el nuestro) --><div class="max-w-md mx-auto px-4">
-                    <div class="bg-btn-orange p-6 rounded-2xl text-white text-center shadow-lg transition transform hover:scale-105">
-                        <p class="text-5xl font-bold mb-2 font-brand tracking-wider">53303</p>
-                        <p class="text-xl font-semibold">Patrimonio vivo el rincón</p>
-                    </div>
-                </div>
-                
-                <!-- Banner de Info Física (de la imagen) --><!-- This section has been removed based on user request --></div>
-        </section>
-
         <section id="como-votar" class="mb-20">
             <div class="grid md:grid-cols-1 gap-8 max-w-2xl mx-auto">
-                <div id="open-chatico-modal" class="bg-black/20 backdrop-blur-sm p-8 rounded-2xl border-2 border-btn-fuchsia/50 text-center cursor-pointer transition transform hover:-translate-y-2 hover:scale-105 duration-300 shadow-xl">
-                    <div class="text-6xl mb-4">🤖</div>
-                    <h3 class="font-bold text-3xl text-btn-fuchsia mb-2 font-brand">Voto Virtual con Chatico</h3>
-                    <p class="text-gray-100 text-lg">¡¡PULSA AQUÍ!!... Te guiamos paso a paso para que votes desde tu celular por WhatsApp.</p>
+                <div id="open-chatico-modal" class="p-8 rounded-2xl text-center cursor-pointer transition-transform transform hover:-translate-y-2 hover:scale-105 duration-300 relative z-10">
+                    <div class="text-6xl mb-4 text-white">🤖</div>
+                    <h3 class="font-bold text-3xl mb-2 font-brand text-white">Voto Virtual con Chatico</h3>
+                    <p class="text-white text-lg">¡¡PULSA AQUÍ!!... Te guiamos paso a paso para que votes desde tu celular por WhatsApp.</p>
                 </div>
             </div>
         </section>
@@ -186,11 +191,11 @@
                 <a href="https://wa.me/573160231524" target="_blank" class="btn bg-green-500 text-white font-bold py-3 px-6 rounded-lg text-lg mt-4 inline-block shadow-md hover:bg-green-600">¡Haz clic para hablar con Chatico!</a>
             </div>
             <div id="carousel-container" class="overflow-hidden">
-                <div class="carousel-slide active text-center"><div class="text-6xl mb-2">1️⃣</div><h3 class="font-bold text-xl mb-2 text-btn-fuchsia">Inicia el Chat</h3><p class="text-sm sm:text-base text-gray-100">Busca en WhatsApp a **Chatico** (+57 316 0231524) y escríbele "**Hola**". Él te saludará y te dará la bienvenida.</p></div>
-                <div class="carousel-slide text-center"><div class="text-6xl mb-2">2️⃣</div><h3 class="font-bold text-xl mb-2 text-btn-orange">Elige la Opción Correcta</h3><p class="text-sm sm:text-base text-gray-100">Chatico te mostrará un menú. Responde escribiendo "**Participación**". Luego, en el siguiente menú, selecciona "**Presupuestos Participativos**" y acepta la política de datos.</p></div>
+                <div class="carousel-slide active text-center"><div class="text-6xl mb-2">1️⃣</div><h3 class="font-bold text-xl mb-2 text-btn-fuchsia">Inicia el Chat</h3><p class="text-sm sm:text-base text-gray-100">Busca en WhatsApp a <strong>Chatico</strong> (+57 316 0231524) y escríbele <strong>"Hola"</strong>. Él te saludará y te dará la bienvenida.</p></div>
+                <div class="carousel-slide text-center"><div class="text-6xl mb-2">2️⃣</div><h3 class="font-bold text-xl mb-2 text-btn-orange">Elige la Opción Correcta</h3><p class="text-sm sm:text-base text-gray-100">Chatico te mostrará un menú. Responde escribiendo <strong>"Participación"</strong>. Luego, en el siguiente menú, selecciona <strong>"Presupuestos Participativos"</strong> y acepta la política de datos.</p></div>
                 <div class="carousel-slide text-center"><div class="text-6xl mb-2">3️⃣</div><h3 class="font-bold text-xl mb-2 text-btn-teal">Verifica tu Identidad</h3><p class="text-sm sm:text-base text-gray-100">Ten tu cédula a la mano. El sistema te pedirá tu tipo de documento (CC), número y la fecha de expedición para validar que tu voto sea real.</p></div>
-                <div class="carousel-slide text-center"><div class="text-6xl mb-2">4️⃣</div><h3 class="font-bold text-xl mb-2 text-btn-fuchsia">Selecciona la Localidad</h3><p class="text-sm sm:text-base text-gray-100">Verás una lista de localidades. Busca **11.- Suba**, escribe el número **11** y envíalo. Chatico te pedirá confirmar tu elección.</p></div>
-                <div class="carousel-slide text-center"><div class="text-6xl mb-2">5️⃣</div><h3 class="font-bold text-xl mb-2 text-btn-orange">¡Vota por el Proyecto!</h3><p class="text-sm sm:text-base text-gray-100">Elige la categoría **4.- Cultura, recreación y deporte**, ingresa nuestro código **53303** y selecciona **Sí** para confirmar. ¡Listo, tu voto ha sido registrado!</p></div>
+                <div class="carousel-slide text-center"><div class="text-6xl mb-2">4️⃣</div><h3 class="font-bold text-xl mb-2 text-btn-fuchsia">Selecciona la Localidad</h3><p class="text-sm sm:text-base text-gray-100">Verás una lista de localidades. Busca <strong>11.- Suba</strong>, escribe el número <strong>11</strong> y envíalo. Chatico te pedirá confirmar tu elección.</p></div>
+                <div class="carousel-slide text-center"><div class="text-6xl mb-2">5️⃣</div><h3 class="font-bold text-xl mb-2 text-btn-orange">¡Vota por el Proyecto!</h3><p class="text-sm sm:text-base text-gray-100">Elige la categoría <strong>4.- Cultura, recreación y deporte</strong>, ingresa nuestro código <strong>53303</strong> y selecciona <strong>Sí</strong> para confirmar. ¡Listo, tu voto ha sido registrado!</p></div>
             </div>
             <div class="flex justify-between items-center mt-6">
                 <button id="prev-slide-btn" class="btn bg-gray-600 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-gray-700">Anterior</button>
@@ -271,4 +276,5 @@
     </script>
 </body>
 </html>
+
 
